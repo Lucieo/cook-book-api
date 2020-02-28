@@ -15,5 +15,23 @@ services:
       - ./app:/app
     #command used to run app (use shell to run command ). Will run django dev server available on all ip addresses that run on the docker container and will run on port 8000
     command: >
-      sh -c "python manage.py runserver 0.0.0.0:8000"
-    
+      sh -c "python manage.py wait_for_db &&
+            python manage.py migrate && 
+            python manage.py runserver 0.0.0.0:8000"
+    #connect to db service
+    environment:
+      - DB_HOST=db
+      - DB_NAME=app
+      - DB_USER=postgres
+      - DB_PASS=supersecretpassword
+    depends_on:
+      - db
+  
+  #find postgres image on docker hub
+  db:
+    image: postgres:10-alpine
+    environment:
+      - POSTGRES_DB=app
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=supersecretpassword
+     
