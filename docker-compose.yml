@@ -1,0 +1,19 @@
+#Version of docker compose your write your file for
+version: "3"
+
+#define services for our app
+#first service is app build context is current dir
+services: 
+  app:
+    build:
+      context: .
+    ports:
+      #map port 8000 locally to container
+      - "8000:8000"
+    volumes:
+      #maps app folder in our project to contain app folder
+      - ./app:/app
+    #command used to run app (use shell to run command ). Will run django dev server available on all ip addresses that run on the docker container and will run on port 8000
+    command: >
+      sh -c "python manage.py runserver 0.0.0.0:8000"
+    
