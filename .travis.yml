@@ -1,0 +1,14 @@
+#what language our project is in
+language: python
+python:
+  - "3.8.2"
+
+serices:
+  - docker
+
+#script to execute before any automation command
+before_script: pip install docker-compose
+
+#run docker-compose command for running tests - flake8 is a linting tool
+script: 
+  - docker-compose run app sh -c "python manage.py test && flake8"
