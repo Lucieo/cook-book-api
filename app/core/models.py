@@ -73,7 +73,7 @@ class Recipe(models.Model):
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE
     )
-    description = models.TextField()
+    description = models.TextField(blank=True)
     # will set to blank string - easier to check if link is blank
     picture_link = models.CharField(max_length=255, blank=True)
     ingredients = models.ManyToManyField('Ingredient')
